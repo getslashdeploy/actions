@@ -18,6 +18,7 @@ RESULT=$?
 if [ 0 != "${RESULT}" ]; then
   echo "Failed '$*'! Exit code '${RESULT}' is not equal to 0"
   ${HOME}/bin/deployment-create-status failure
+  echo "$output"
   exit ${RESULT}
 fi
 
