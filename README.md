@@ -1,6 +1,6 @@
 # GitHub Actions for SlashDeploy
 
-This repository contains GitHub Actions to be used with SlashDeploy.
+This repository contains GitHub Actions optimized for usage with [SlashDeploy](https://getslashdeploy.com/).
 
 ## Usage
 

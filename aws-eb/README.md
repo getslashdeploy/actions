@@ -1,10 +1,28 @@
-# GitHub Actions for AWS EB
+# GitHub Actions for AWS Elastic Beanstalk
 
-This Action for [AWS](https://aws.amazon.com/) enables arbitrary actions for interacting with AWS services via [the `eb` command-line client](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3.html). It's based on the [GitHub Actions for AWS](https://github.com/actions/aws).
+This Action for [AWS](https://aws.amazon.com/) enables arbitrary actions for interacting with AWS Elastic Beanstalk service via [the `eb` command-line client](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3.html). It's based on the [GitHub Actions for AWS](https://github.com/actions/aws).
 
 ## Usage
 
-TBA
+The example below illustrates how to deploy to AWS Elastic Beanstalk and report status back to [GitHub Deployment API](https://developer.github.com/v3/repos/deployments/), so that [SlashDeploy](https://getslashdeploy.com/) could process the deployment and notify Slack.
+
+```
+workflow "Deploy to AWS EB" {
+  on = "deployment"
+  resolves = ["deploy"]
+}
+
+action "deploy.scripts" {
+  uses = "unacast/actions/github-deploy@master"
+}
+
+action "deploy" {
+  uses = "getslashdeploy/actions/aws-eb@master"
+  secrets = ["GITHUB_TOKEN"]
+  args = "deploy <ENTER NAME OF EB ENVIRONMENT>"
+  needs = ["deploy.scripts"]
+}
+```
 
 ### Secrets
 
