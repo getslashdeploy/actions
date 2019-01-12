@@ -1,0 +1,4 @@
+#!/bin/sh
+echo "Fake awsebcli"
+echo "AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION"
+echo "AWS_DEFAULT_OUTPUT: $AWS_DEFAULT_OUTPUT"
