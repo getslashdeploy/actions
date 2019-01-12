@@ -1,6 +1,6 @@
-include ../docker.mk
-include ../help.mk
-include ../shell.mk
+include ./docker.mk
+include ./help.mk
+include ./shell.mk
 
 IMAGE_NAME=awseb-cli
 
