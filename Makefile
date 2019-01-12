@@ -1,20 +1,29 @@
-include ./docker.mk
-include ./help.mk
-include ./shell.mk
+export ROOT_DIR=$(CURDIR)
+export DOCKER_REPO=github
 
-IMAGE_NAME=awseb-cli
+MODULES=$(dir $(wildcard */Makefile))
 
 .PHONY: clean
-clean: ## Clean up after the build process.
+clean: ## Call the 'clean' target on all sub-modules
+	$(foreach mod,$(MODULES),($(MAKE) -C $(mod) $@) || exit $$?;)
 
 .PHONY: lint
-lint: shell-lint docker-lint ## Lint all of the files for this Action.
+lint: ## Call the 'lint' target on all sub-modules
+	$(foreach mod,$(MODULES),($(MAKE) -C $(mod) $@) || exit $$?;)
 
 .PHONY: build
-build: docker-build ## Build this Action.
+build: ## Call the 'build' target on all sub-modules
+	$(foreach mod,$(MODULES),($(MAKE) -C $(mod) $@) || exit $$?;)
 
 .PHONY: test
-test: shell-test ## Test the components of this Action.
+test: ## Call the 'test' target on all sub-modules
+	$(foreach mod,$(MODULES),($(MAKE) -C $(mod) $@) || exit $$?;)
 
 .PHONY: publish
-publish: docker-publish ## Publish this Action.
+publish: ## Call the 'publish' target on all sub-modules
+	$(foreach mod,$(MODULES),($(MAKE) -C $(mod) $@) || exit $$?;)
+
+.PHONY: dev-all
+dev-all: lint build test
+
+include help.mk

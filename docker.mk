@@ -2,7 +2,7 @@ IMAGE_NAME=$(shell basename $(CURDIR))
 
 .PHONY: docker-lint
 docker-lint: ## Run Dockerfile Lint on all dockerfiles.
-	dockerfile_lint -r ./.dockerfile_lint/github_actions.yaml $(wildcard Dockerfile* */Dockerfile*)
+	dockerfile_lint -r $(ROOT_DIR)/.dockerfile_lint/github_actions.yaml $(wildcard Dockerfile* */Dockerfile*)
 
 .PHONY: docker-build
 docker-build: ## Build the top level Dockerfile using the directory or $IMAGE_NAME as the name.
