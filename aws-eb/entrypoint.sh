@@ -7,11 +7,24 @@
 # Respect AWS_DEFAULT_REGION if specified
 [ -n "$AWS_DEFAULT_REGION" ] || export AWS_DEFAULT_REGION=us-east-1
 
+AWS_CONFIG_FILE=${HOME}/.aws/config
+
+# Set up eb profile
+mkdir ${HOME}/.aws
+touch $AWS_CONFIG_FILE
+chmod 600 $AWS_CONFIG_FILE
+
+cat << EOF > $AWS_CONFIG_FILE
+[eb-cli]
+aws_access_key_id = ${AWS_ACCESS_KEY_ID}
+aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
+EOF
+
 # Pending
 ${HOME}/bin/deployment-create-status pending
 
 # Execute
-output=$( sh -c "eb $*" )
+output=$( sh -c "eb --profile eb-cli -r $AWS_DEFAULT_REGION $*" )
 
 # Failure
 RESULT=$?
