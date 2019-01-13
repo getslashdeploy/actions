@@ -7,6 +7,9 @@
 # Respect AWS_DEFAULT_REGION if specified
 [ -n "$AWS_DEFAULT_REGION" ] || export AWS_DEFAULT_REGION=us-east-1
 
+# Respect AWS_DEFAULT_OUTPUT if specified
+[ -n "$AWS_DEFAULT_OUTPUT" ] || export AWS_DEFAULT_OUTPUT=json
+
 # Respect AWS_PROFILE if specific
 [ -n "$AWS_PROFILE" ] || export AWS_PROFILE=eb-cli
 
@@ -18,7 +21,9 @@ touch $AWS_CONFIG_FILE
 chmod 600 $AWS_CONFIG_FILE
 
 cat << EOF > $AWS_CONFIG_FILE
-[${AWS_PROFILE}]
+[profile ${AWS_PROFILE}]
+output = ${AWS_DEFAULT_OUTPUT}
+region = ${AWS_DEFAULT_REGION}
 aws_access_key_id = ${AWS_ACCESS_KEY_ID}
 aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
 EOF
