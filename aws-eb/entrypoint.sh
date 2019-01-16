@@ -15,6 +15,9 @@
 
 AWS_CONFIG_FILE=${HOME}/.aws/config
 
+# Set deployment environment name
+export GITHUB_ENVIRONMENT_NAME=`cat $GITHUB_EVENT_PATH | ${HOME}/bin/JSON.sh | grep '\["deployment","environment"]' | cut -f2 | sed -e 's/"//g'`
+
 # Set up eb profile
 mkdir ${HOME}/.aws
 touch $AWS_CONFIG_FILE
